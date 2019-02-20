@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.SendOrderDao">
+	<select id="selectSendOrderByDirId" resultType="com.bean.Sendorder">
+		select * from
+		sendorder where dri_id is null
+	</select>
+	<select id="selectSendOrderByStatus" parameterType="String"
+		resultType="com.bean.Sendorder">
+		select * from
+		sendorder where send_status = '待接单'
+		and
+		dri_id = #{dri_id}
+	</select>
+	<select id="selectTypeDriver" parameterType="String" resultType="String">
+		select dri_type from driver where dri_id = #{dri_id}
+	</select>
+	
+	
+	
+	<update id="updateSendOrder" parameterType="String">
+		update sendorder
+		set send_status='已接单' where send_id = #{send_id}
+	</update>
+	<update id="updateApplyStatus" parameterType="String">
+		update apply set app_status='待完成' where app_id = ( select app_id from
+		sendorder where send_id = #{send_id} )
+	</update>
+	<update id="updateCarStatus" parameterType="String">
+		update car set car_status='出车' where car_id = ( select car_id from
+		sendorder where send_id = #{send_id} )
+	</update>
+	<update id="updateDriverStatus" parameterType="String">
+		update driver set dri_status='出车' where dri_id = ( select dri_id from
+		sendorder where send_id = #{send_id} )
+	</update>
+	
+	
+	<select id="selectSendOrder" parameterType="String" resultType="com.bean.Sendorder">
+		select * from
+		sendorder where send_status = '已接单'
+		and
+		dri_id = #{dri_id}
+	</select>
+	
+	<update id="updateDriverfinish" parameterType="String">
+		update driver set dri_status='空闲' where dri_id = ( select dri_id from
+		sendorder where send_id = #{send_id} )
+	</update>
+	<update id="updateCarfinish" parameterType="String">
+		update car set car_status='空闲' where car_id = ( select car_id from
+		sendorder where send_id = #{send_id} )
+	</update>
+	<update id="updateSendOrderfinish" parameterType="String">
+		update sendorder
+		set send_status='已完成' where send_id = #{send_id}
+	</update>
+	<update id="updateApplyfinish" parameterType="String">
+		update apply set app_status='已完成' where app_id = ( select app_id from
+		sendorder where send_id = #{send_id} )
+	</update>
+</mapper>

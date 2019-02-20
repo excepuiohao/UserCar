@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.CarManagerDao">
+	<sql id="carColumn">
+		car_id,car_color,car_ccolor,car_fleet,car_type
+	</sql>
+
+
+	<select id="findAllCar" resultType="com.bean.Car">
+		select * from car
+	</select>
+
+	<select id="findCarByStatus" parameterType="String" resultType="com.bean.Car">
+		select * from car where car_status = #{car_status}
+	</select>
+
+	<select id="findCarBySometype" parameterType="java.util.Map"
+		resultType="com.bean.Car">
+		select * from (select p.*,rownum r from car p where car_status =
+		#{car_status}
+		<choose>
+			<when test="car_type!=null">
+				and car_type = #{car_type}
+			</when>
+			<when test="car_color!=null">
+				and car_color = #{car_color}
+			</when>
+		</choose>
+		)
+		<choose>
+			<when test="begin!=null">
+				where r between #{begin} and #{end}
+			</when>
+		</choose>
+	</select>
+
+	<sql id="allCar">
+		car_id,car_fleet,car_configer,car_price,car_address,car_ccolor,
+		car_color,car_office,car_beginkm,car_buydate,car_department,
+		car_ctype,car_type,car_chassis,car_operations,etc,car_status,dri_id
+	</sql>
+
+	<insert id="insertCar" parameterType="com.bean.Car">
+		insert into car(
+		<include refid="allCar" />
+		)
+		values(#{car_id,jdbcType=VARCHAR},#{car_fleet,jdbcType=VARCHAR},#{car_configer,jdbcType=VARCHAR},#{car_price,jdbcType=NUMERIC},#{car_address,jdbcType=VARCHAR},#{car_ccolor,jdbcType=VARCHAR},#{car_color,jdbcType=VARCHAR},#{car_office,jdbcType=VARCHAR},#{car_beginkm,jdbcType=NUMERIC},to_date(#{car_buydate},'yyyy-mm-dd'),#{car_department,jdbcType=VARCHAR},#{car_ctype,jdbcType=VARCHAR},#{car_type,jdbcType=VARCHAR},#{car_chassis,jdbcType=VARCHAR},#{car_operations,jdbcType=VARCHAR},#{etc,jdbcType=VARCHAR},#{car_status,jdbcType=VARCHAR},#{dri_id,jdbcType=VARCHAR})
+	</insert>
+
+	<select id="findCarById" parameterType="String" resultType="com.bean.Car">
+		select * from car where car_id = #{car_id}
+	</select>
+
+	<select id="findSendorderByCarId" parameterType="String"
+		resultType="com.bean.Sendorder">
+		select * from sendorder where car_id = #{car_id}
+	</select>
+
+	<select id="countSendorderTimes" parameterType="String"
+		resultType="String">
+		select count(send_id) from sendorder where car_id = #{car_id}
+	</select>
+
+	<select id="countMaintainTimes" parameterType="String"
+		resultType="String">
+		select count(mai_id) from maintain where car_id = #{car_id}
+	</select>
+
+	<select id="countMaintainMoney" parameterType="String"
+		resultType="String">
+		select sum(mai_money) from maintain where car_id = #{car_id}
+	</select>
+
+	<select id="countMaintenanceTimes" parameterType="String"
+		resultType="String">
+		select count(maa_id) from maintenance where car_id = #{car_id}
+	</select>
+
+	<select id="countMaintenanceMoney" parameterType="String"
+		resultType="String">
+		select sum(maa_money) from maintenance where car_id = #{car_id}
+	</select>
+
+	<select id="countRefuelingMoney" parameterType="String"
+		resultType="String">
+		select sum(ref_money) from refueling where car_id = #{car_id}
+	</select>
+
+	<update id="scrappedCar" parameterType="String">
+		update car set car_status = '已报废'
+		where car_id = #{car_id}
+	</update>
+
+	<select id="findAllMaintain" parameterType="String" resultType="com.bean.Maintain">
+		select * from maintain where adm_id = #{adm_id}
+	</select>
+
+	<select id="findAllMaintenance" parameterType="String"
+		resultType="com.bean.Maintenance">
+		select * from maintenance where adm_id = #{adm_id}
+	</select>
+
+	<select id="findAllRefueling" resultType="com.bean.Refueling">
+		select * from refueling
+	</select>
+
+	<select id="findMaintainById" parameterType="String" resultType="com.bean.Maintain">
+		select * from maintain where car_id = #{car_id}
+	</select>
+
+	<select id="findMaintenanceById" parameterType="String"
+		resultType="com.bean.Maintenance">
+		select * from maintenance where car_id = #{car_id}
+	</select>
+
+	<select id="findRefuelingById" parameterType="String"
+		resultType="com.bean.Refueling">
+		select * from refueling where car_id = #{car_id}
+	</select>
+
+	<update id="approvedMaintain" parameterType="String">
+		update maintain set mai_status ='审批通过' where mai_id = #{mai_id}
+	</update>
+
+	<update id="approvedMaintenance" parameterType="String">
+		update maintenance set maa_status ='审批通过' where maa_id = #{maa_id}
+	</update>
+
+	<update id="refuseMaintain" parameterType="String">
+		update maintain set mai_status ='审批不通过' where mai_id = #{mai_id}
+	</update>
+
+	<update id="refuseMaintenance" parameterType="String">
+		update maintenance set maa_status ='审批不通过' where maa_id = #{maa_id}
+	</update>
+
+	<select id="findDriver" resultType="String">
+		select dri_id from driver
+	</select>
+
+	<select id="JudgeMaiStatus" parameterType="String" resultType="String">
+		select mai_status from maintain where mai_id = #{mai_id}
+	</select>
+
+	<select id="JudgeMaaStatus" parameterType="String" resultType="String">
+		select maa_status from maintenance where maa_id = #{maa_id}
+	</select>
+
+	<select id="findCarStatus" resultType="String">
+		select distinct car_status from car
+	</select>
+
+	<update id="maintainCar" parameterType="String">
+		update car set car_status = '维修中'
+		where car_id = #{car_id}
+	</update>
+
+	<update id="maintenanceCar" parameterType="String">
+		update car set car_status = '保养中'
+		where car_id = #{car_id}
+	</update>
+
+	<update id="completeCar" parameterType="String">
+		update car set car_status = '空闲'
+		where car_id = #{car_id}
+	</update>
+</mapper>

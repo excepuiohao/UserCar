@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dao.ApplyDao">
+	<insert id="insertApply" parameterType="com.bean.Apply">
+		insert into
+		ucs.APPLY(APP_ID,EMP_ID, ADM_ID,CAR_TYPE, APP_COUNT, APP_BEGINPLACE,
+		APP_ROUTE,
+		APP_LASTPLACE, APP_TIME,
+		APP_USETIME, APP_DURATION,
+		APP_REASON,
+		APP_REMARKS, APP_STATUS, EMP_PHONE,
+		EMP_MECH, CAR_COLOR)
+		values
+		(#{app_id,jdbcType=VARCHAR}, #{emp_id,jdbcType=VARCHAR},
+		#{adm_id,jdbcType=VARCHAR},
+		#{car_type,jdbcType=VARCHAR},
+		#{app_count,jdbcType=DECIMAL}, #{app_beginplace,jdbcType=VARCHAR},
+		#{app_route,jdbcType=VARCHAR}, #{app_lastplace,jdbcType=VARCHAR},
+		#{app_time,jdbcType=TIMESTAMP},
+		#{app_usetime,jdbcType=TIMESTAMP},
+		#{app_duration,jdbcType=DECIMAL}, #{app_reason,jdbcType=VARCHAR},
+		#{app_remarks,jdbcType=VARCHAR}, #{app_status,jdbcType=VARCHAR},
+		#{emp_phone,jdbcType=DECIMAL},
+		#{emp_mech,jdbcType=VARCHAR},
+		#{car_color,jdbcType=VARCHAR})
+	</insert>
+
+	<select id="selectByStuats1" resultType="com.bean.Apply">
+		select
+		app_id,emp_mech,car_type,app_usetime,app_status from ucs.apply where
+		app_status = '待审核'
+
+	</select>
+	<select id="selectByStuats2" resultType="com.bean.Apply">
+		select
+		app_id,emp_mech,car_type,app_usetime,app_status from ucs.apply where
+		app_status = '待派车'
+
+	</select>
+	<select id="selectByStuats3" resultType="com.bean.Apply">
+		select
+		app_id,emp_mech,car_type,app_usetime,app_status from ucs.apply where
+		app_status = '待出车'
+
+	</select>
+	<select id="selectByStuats4" resultType="com.bean.Apply">
+		select
+		app_id,emp_mech,car_type,app_usetime,app_status from ucs.apply where
+		app_status = '待完成'
+
+	</select>
+	<select id="selectByappId" resultType="com.bean.Apply">
+		select * from ucs.apply where
+		app_id = #{app_id,jdbcType=VARCHAR}
+
+	</select>
+	<delete id="deleteApply" parameterType="String">
+		delete from ucs.apply where app_id = #{app_id,jdbcType=VARCHAR}
+	</delete>
+	<update id="updateByappId" parameterType="com.bean.Apply">
+		update ucs.APPLY
+		set
+		EMP_ID =
+		#{emp_id,jdbcType=VARCHAR},CAR_TYPE = #{car_type,jdbcType=VARCHAR},
+		APP_COUNT =
+		#{app_count,jdbcType=DECIMAL},
+		APP_BEGINPLACE = #{app_beginplace,jdbcType=VARCHAR}, APP_ROUTE
+		=
+		#{app_route,jdbcType=VARCHAR},
+		APP_LASTPLACE = #{app_lastplace,jdbcType=VARCHAR},APP_TIME =
+		#{app_time,jdbcType=TIMESTAMP},
+		APP_USETIME =
+		#{app_usetime,jdbcType=TIMESTAMP},APP_DURATION =
+		#{app_duration,jdbcType=DECIMAL},
+		APP_REASON
+		=
+		#{app_reason,jdbcType=VARCHAR}, APP_REMARKS =
+		#{app_remarks,jdbcType=VARCHAR}, EMP_PHONE = #{emp_phone,jdbcType=DECIMAL},
+		EMP_MECH = #{emp_mech,jdbcType=VARCHAR},
+		CAR_COLOR = #{car_color,jdbcType=VARCHAR}
+		where APP_ID =
+		#{app_id,jdbcType=VARCHAR}
+	</update>
+</mapper>

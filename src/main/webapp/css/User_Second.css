@@ -1,0 +1,32 @@
+@charset "UTF-8";
+a {
+	text-decoration: none;
+	
+}
+header{
+	background-color:#E9E9E9;
+	height:40px;
+	width:1080px;
+}#div1{
+	background-color:#007FCB;
+	height:40px;
+	width:380px;
+}
+#div2{
+	border-bottom:solid #007FCB 20px;
+	border-left:solid #007FCB 20px;
+	border-right:solid #E9E9E9 20px;
+	border-top:solid #E9E9E9 20px;
+	position:relative;
+	left:380px;
+	top:-40px;
+	height:0px;
+	width:0px;
+}
+#div3{
+	width:600px;
+	height:500px;
+	position:relative;
+	top:50px;
+	left: 100px
+}

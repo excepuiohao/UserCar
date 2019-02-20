@@ -1,0 +1,16 @@
+@CHARSET "UTF-8";
+
+/* #IDTable1{
+	border: solid red 1px;
+	border-collapse: collapse;
+}
+
+.IDTd1{
+	border: solid #ccc 1px;
+} */
+table{
+	border-collapse: collapse;
+}
+button{
+	width: 100px;
+}

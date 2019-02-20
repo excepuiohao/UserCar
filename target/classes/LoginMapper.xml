@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.LoginDao">
+
+<select id="driverLogin" parameterType="String" resultType="com.bean.Driver">
+select * from driver where dri_id =#{dri_id}
+</select>
+
+<select id="EmployeeLogin" parameterType="String" resultType="com.bean.Employee">
+select * from employee where emp_id =#{emp_id}
+</select>
+
+
+</mapper>

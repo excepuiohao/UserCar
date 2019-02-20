@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.DriverDao">
+	<insert id="insertDriver" parameterType="com.bean.Driver">
+		insert into driver
+		values(#{dri_id},#{dri_name},
+		#{dri_password},#{dri_sex},
+		#{dri_phone},#{dri_identity},
+		#{dri_email},#{dri_polotics},
+		(select
+		to_date(#{dri_birthday},'yyyy-MM-dd') from dual),#{dri_address},
+		#{dri_photo},#{dri_licensenum},
+		(select
+		to_date(#{dri_getlicensetime},'yyyy-MM-dd') from
+		dual),#{dri_carstyle},
+		#{dri_diverage},#{dri_lia},
+		(select
+		to_date(#{dri_toc},'yyyy-MM-dd') from dual),#{dri_hzday},
+		#{dri_type},'新增',
+		#{dri_validperiod},#{dri_fleet},
+		#{dri_remarks})
+	</insert>
+
+	<select id="selectCount" parameterType="java.util.Map"
+		resultType="Integer">
+		select count(*) from
+		driver
+		<choose>
+			<when test="sort!=null">
+				where ${sort} like #{type}
+			</when>
+		</choose>
+	</select>
+
+	<select id="selectPaged" parameterType="java.util.Map"
+		resultType="com.bean.Driver">
+		select * from (select
+		dri_id,dri_name,dri_sex,dri_phone,dri_carstyle,dri_diverage,dri_type,dri_status,rownum
+		r
+		from driver
+		<choose>
+			<when test="sort!=null">
+				where ${sort} like #{type}
+			</when>
+		</choose>
+		) where r between #{beginLine} and #{endLine}
+	</select>
+
+	<select id="selectInfoById" parameterType="String" resultType="com.bean.Driver">
+		select dri_id,dri_sex,
+		dri_phone,dri_name,
+		dri_identity,dri_email,
+		dri_polotics,dri_birthday,
+		dri_address,dri_photo,
+		dri_licensenum,dri_getlicensetime,
+		dri_carstyle,dri_diverage,
+		dri_lia,dri_toc,
+		dri_hzday,dri_type,
+		dri_validperiod,dri_fleet,
+		dri_remarks,dri_status
+		from driver where dri_id = #{dri_id}
+	</select>
+
+	<update id="updateInfoById" parameterType="java.util.Map">
+		update driver set
+		${columnName} = #{propertyValue} where dri_id = #{dri_id}
+	</update>
+
+	<select id="selectSendOrderCountByDriverId" parameterType="String"
+		resultType="Integer">
+		select count(*) from sendorder where dri_id = #{dri_id}
+	</select>
+
+	<select id="selectSendorderByDriverId" parameterType="java.util.Map"
+		resultType="com.bean.Sendorder">
+		select * from (select s.*, rownum r1 from sendorder s where dri_id = #{dri_id}) where r1 between #{beginLine} and #{endLine}
+<!-- 		select * from (select *, rownum as r from ucs.sendorder
+		where dri_id = #{dri_id}) a where a.r
+		between #{beginLine} and #{endLine} -->
+	</select>
+
+</mapper>

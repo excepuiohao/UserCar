@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	<mappers>
+		<mapper resource="DispatchMapper.xml" />
+		<mapper resource="CarManagerMapper.xml" />
+		<mapper resource="ApplyMapper.xml" />
+		<mapper resource="UseCarRecordMapper.xml" />
+		<mapper resource="SendOrderMapper.xml" />
+		<mapper resource="DriverApplyMapper.xml" />
+		<mapper resource="DriverMapper.xml" />
+		<mapper resource="LoginMapper.xml" />
+	</mappers>
+
+</configuration>

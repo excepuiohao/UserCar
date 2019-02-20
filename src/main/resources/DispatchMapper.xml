@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.DispatchDao">
+	<select id="findApply" parameterType="java.util.Map" resultType="com.bean.ApplyCarBean">
+		select * from (select p.*,rownum r from apply p
+		<choose>
+			<when test="type!=null">
+				where ${type} like #{typevalue}
+			</when>
+		</choose>
+		order by app_id )a left join employee e on a.emp_id=e.emp_id
+		<choose>
+			<when test="begin!=null">
+				where r between #{begin} and #{end}
+			</when>
+		</choose>
+
+	</select>
+
+	<select id="findApplyBySometype" parameterType="java.util.Map"
+		resultType="String" statementType="STATEMENT">
+		select distinct ${type} from apply a
+	</select>
+
+	<update id="updateApplyStatus" parameterType="java.util.Map">
+		update apply set app_status=#{status} where app_id =#{app_id}
+	</update>
+
+	<insert id="insertSendOrder" parameterType="com.bean.Sendorder">
+		insert into sendorder
+		values(#{send_id},#{adm_id},#{app_id},#{send_time},#{send_status},#{car_id},#{dri_id})
+	</insert>
+</mapper>
+

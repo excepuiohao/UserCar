@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.DriverApplyDao">
+	<insert id="insertMaintain" parameterType="com.bean.Maintain">
+		insert into
+		maintain
+		values(#{mai_id},#{car_id},#{dri_id},#{mai_money},to_date(#{mai_time},
+		'yyyy-mm-dd'),to_date(#{mai_taketime},
+		'yyyy-mm-dd'),#{adm_id},#{mai_remark},#{mai_garage},#{mai_status})
+	</insert>
+	<insert id="insertMaintenance" parameterType="com.bean.Maintenance">
+		insert into
+		maintenance
+		values(#{maa_id},#{car_id},#{dri_id},#{maa_money},to_date(#{maa_time},
+		'yyyy-mm-dd'),to_date(#{maa_taketime},
+		'yyyy-mm-dd'),#{adm_id},#{maa_garage},#{maa_kilometer},#{maa_nextkilometer},#{maa_projects},#{maa_status},#{maa_remark})
+	</insert>
+	<insert id="insertRefueling" parameterType="com.bean.Refueling">
+		insert into
+		refueling
+		values
+		(#{ref_id},#{car_id},#{dri_id},#{ref_money},#{ref_label},to_date(#{ref_time},'yyyy-mm-dd'),#{ref_status},#{adm_id},#{ref_payment},#{ref_unitprice},#{ref_quantity},#{ref_nowkm})
+	</insert>
+	<insert id="insertScrap" parameterType="com.bean.Scrap">
+		insert into scrap
+		values
+		(#{scr_id},#{car_id},#{dri_id},#{adm_id},#{scr_status},to_date(#{scr_time},'yyyy-mm-dd'),#{scr_remark})
+	</insert>
+	<select id="selectDriverById" parameterType="String" resultType="com.bean.Driver">
+		select * from driver where dri_id=#{dri_id}
+	</select>
+	<resultMap type="com.bean.Order" id="rm1">
+		<result column="send_id" property="id" />
+		<result column="send_time" property="times1" />
+		<result column="send_status" property="status" />
+	</resultMap>
+	<select id="selectSendOrderById" parameterType="String"
+		resultMap="rm1">
+		select * from sendorder where dri_id=#{dri_id}
+	</select>
+	<resultMap type="com.bean.Order" id="rm2">
+		<result column="mai_id" property="id" />
+		<result column="mai_time" property="times" />
+		<result column="mai_status" property="status" />
+	</resultMap>
+	<select id="selectMaintainById" parameterType="String" resultMap="rm2">
+		select * from maintain where dri_id=#{dri_id}
+	</select>
+	<resultMap type="com.bean.Order" id="rm3">
+		<result column="maa_id" property="id" />
+		<result column="maa_time" property="times" />
+		<result column="maa_status" property="status" />
+	</resultMap>
+	<select id="selectMaintenanceById" parameterType="String" resultMap="rm3">
+		select * from maintenance where dri_id=#{dri_id}
+	</select>
+	<resultMap type="com.bean.Order" id="rm4">
+		<result column="ref_id" property="id" />
+		<result column="ref_time" property="times" />
+		<result column="ref_status" property="status" />
+	</resultMap>
+	<select id="selectRefuelingById" parameterType="String" resultMap="rm4">
+		select * from refueling where dri_id=#{dri_id}
+	</select>
+	<resultMap type="com.bean.Order" id="rm5">
+		<result column="scr_id" property="id" />
+		<result column="scr_time" property="times" />
+		<result column="scr_status" property="status" />
+	</resultMap>
+	<select id="selectScrapById" parameterType="String" resultMap="rm5">
+		select * from scrap where dri_id=#{dri_id}
+	</select>
+
+</mapper>

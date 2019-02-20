@@ -1,0 +1,42 @@
+@CHARSET "UTF-8";
+
+#IDTable1{
+	border: solid #ccc 1px;
+	border-collapse: collapse;
+}
+
+.IDTd1{
+	border: solid #ccc 1px;
+}
+
+#SDTable1{
+	border: solid #cc 1px;
+	border-collapse: collapse;
+}
+
+.SDTd1{
+	border: solid #ccc 1px;
+}
+
+.SDA1{
+	background-color:#ff6700;
+	color:white;
+}
+
+#SDITable1{
+	border: solid #ccc 1px;
+	border-collapse: collapse;
+}
+
+.SDITd1{
+	border: solid #ccc 1px;
+}
+
+#SSITable1{
+	border: solid #ccc 1px;
+	border-collapse: collapse;
+}
+
+.SSITd1{
+	border: solid #ccc 1px;
+}

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dao.UseCarRecordDao">
+	<select id="selectByempId" resultType="com.bean.UseCarRecord">
+		select
+		s.app_id,a.emp_id,a.emp_mech,a.emp_phone,a.car_type,s.car_id,a.app_usetime,s.send_status
+		from
+		sendorder s join apply a on s.app_id = a.app_id
+		where a.emp_id ='1' and s.send_status = '已完成'
+		<!-- #{app_id,jdbcType=VARCHAR} -->
+	</select>
+
+</mapper>
